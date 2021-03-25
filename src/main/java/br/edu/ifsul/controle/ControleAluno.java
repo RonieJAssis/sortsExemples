@@ -5,7 +5,6 @@
  */
 package br.edu.ifsul.controle;
 
-//alo
 import br.edu.ifsul.dao.AlunoDAO;
 import br.edu.ifsul.modelo.Aluno;
 import br.edu.ifsul.util.Util;
