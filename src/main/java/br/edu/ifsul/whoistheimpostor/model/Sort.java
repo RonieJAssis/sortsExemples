@@ -5,6 +5,7 @@
  */
 package br.edu.ifsul.whoistheimpostor.model;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -41,6 +42,7 @@ public class Sort {
                 auxArray[temporaryArray[array[i].getMonth().getValue()] - 1] = array[i];
                 temporaryArray[array[i].getMonth().getValue()]--;
                 i--;
+
             }
         } else {
             while (i != -1) {
@@ -78,11 +80,21 @@ public class Sort {
             }
             i = 0;
             int c = 0;
+            int monthNumber = 0;
+            boolean verify = false;
             while (i != 10) {
                 int j = 0;
                 while (j != array.length) {
                     if (j != n[i]) {
                         array[c] = z[j][i];
+                        if (c == 1000000 && digit == 1 && month == true) {
+                            verify = true;
+                            monthNumber = array[c].getMonth().getValue();
+                        }
+                        if (monthNumber != array[c].getMonth().getValue() && verify == true) {
+                            array = Arrays.copyOfRange(array, 0, c - 1);
+                            return array;
+                        }
                         c++;
                     } else {
                         break;
@@ -97,55 +109,39 @@ public class Sort {
         return array;
     }
 
-    public Log[] bucketSort(Log[] array, int max, boolean month) {
-        int bucketNumber = max / 5;
-
-        LinkedList[] B = new LinkedList[bucketNumber];
+    public Log[] selectionSort(Log[] array, boolean month) {
         int i = 0;
+        boolean verify = false;
+        int monthNumber = 0;
         while (i != array.length) {
-            int j = bucketNumber - 1;
-            while (true) {
-                if (j < 0) {
-                    break;
-                }
+            int index = i;
+            int j = i + 1;
+            while (j != array.length) {
                 if (month == true) {
-                    if (array[i].getMonth().getValue() >= (j * 5)) {
-                        B[j].add(array[i]);
-                        break;
+                    String s = Integer.toString(array[j].getMonth().getValue() - array[index].getMonth().getValue());
+                    if (s.charAt(0) == '-') {
+                        index = j;
                     }
                 } else {
-                    if (array[i].getLog() >= (j * 5)) {
-                        B[j].add(array[i]);
-                        break;
+                    String s = Integer.toString(array[j].getLog() - array[index].getLog());
+                    if (s.charAt(0) == '-') {
+                        index = j;
                     }
                 }
-                j--;
-            }
-            i++;
-        }
-        int number = 0;
-        i=0;
-        while(i!=bucketNumber){
-            Log[] aux = new Log[B[i].size()];
-            int j=0;
-            while(j!=aux.length){
-                aux[j] = (Log)B[i].get(j);
                 j++;
             }
-            if(month==true){
-                this.countingSort(aux,12, month);
-            }else{
-                this.countingSort(aux, aux.length, month);
+            Log smallerNumber = array[index];
+            array[index] = array[i];
+            array[i] = smallerNumber;
+            if (i == 1000000 && month == true) {
+                verify = true;
+                monthNumber = array[i].getMonth().getValue();
             }
-            
-            //this.radixSort(aux, month);
-            j=0;
-            while(j!=aux.length){
-
-                array[number]=aux[j];
-                number++;
-                j++;
-            }    
+            if (monthNumber != array[i].getMonth().getValue() && verify == true) {
+                System.out.println(i);
+                array = Arrays.copyOfRange(array, 0, i - 1);
+                return array;
+            }
             i++;
         }
         return array;
