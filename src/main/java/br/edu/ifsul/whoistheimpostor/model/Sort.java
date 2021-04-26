@@ -133,7 +133,7 @@ public class Sort {
             Log smallerNumber = array[index];
             array[index] = array[i];
             array[i] = smallerNumber;
-            if (i == 1000000 && month == true) {
+            if (i == 4 && month == true) {
                 verify = true;
                 monthNumber = array[i].getMonth().getValue();
             }

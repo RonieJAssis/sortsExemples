@@ -24,7 +24,6 @@ public enum Month {
     November(11),
     December(12);
     
-    
     //worstCase.txt
     //january(1),
     //february(2),

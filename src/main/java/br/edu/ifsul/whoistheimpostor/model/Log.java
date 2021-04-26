@@ -16,62 +16,28 @@ public class Log implements Serializable{
     private int log;
     private String msg;
     private String user;
-
-    /**
-     * @return the month
-     */
     public Month getMonth() {
         return month;
     }
-
-    /**
-     * @param month the month to set
-     */
     public void setMonth(Month month) {
         this.month = month;
     }
-
-    /**
-     * @return the log
-     */
     public int getLog() {
         return log;
     }
-
-    /**
-     * @param log the log to set
-     */
     public void setLog(int log) {
         this.log = log;
     }
-
-    /**
-     * @return the msg
-     */
     public String getMsg() {
         return msg;
     }
-
-    /**
-     * @param msg the msg to set
-     */
     public void setMsg(String msg) {
         this.msg = msg;
     }
-
-    /**
-     * @return the user
-     */
     public String getUser() {
         return user;
     }
-
-    /**
-     * @param user the user to set
-     */
     public void setUser(String user) {
         this.user = user;
     }
-    
-    
 }

@@ -26,49 +26,74 @@ public class Main {
         final ObjectMapper objectMapper = new ObjectMapper();
         Log[] logsArray = objectMapper.readValue(new File("./src/main/java/repository/logs.txt"), Log[].class);
         Sort sort = new Sort();
-        //logsArray=sort.countingSort(logsArray,12, true);
+        
+        //--------------------counting--------------
+        logsArray=sort.countingSort(logsArray,12, true);
+        int necessaryIndex = 1;
+        int firstIndex=0,lastIndex=-1;
+        boolean verify=false;
+        for(Log log : logsArray){
+            lastIndex++;
+            if(lastIndex==1000000){
+                verify=true;
+            }
+            if(log.getMonth().getValue()!=necessaryIndex){
+                if(verify==true){
+                    lastIndex--;
+                    break;
+                }
+                firstIndex=lastIndex;
+                necessaryIndex++;
+            }
+        }
+        necessaryIndex = 1000000-(firstIndex);
+        if(verify==false){
+            lastIndex=logsArray.length;
+        }
+        Log[] monthLogs = Arrays.copyOfRange(logsArray, firstIndex, lastIndex);
+        monthLogs = sort.countingSort(monthLogs, monthLogs.length, false);
+        
+        //-----------------radix----------------------------
+        //logsArray=sort.radixSort(logsArray, true);
+        //int j=logsArray.length-1;
+        //int indexMonth=logsArray[j].getMonth().getValue();        
+        //while(logsArray[j].getMonth().getValue()==indexMonth){
+        //    j--;
+        //   if(j==0){
+        //       break;
+        //   }
+        //}
+        //System.out.println(j);
+        //Log[] monthLogs = Arrays.copyOfRange(logsArray, j, logsArray.length-1);
+        //int necessaryIndex = 1000000-(j+1);   
+        //monthLogs = sort.countingSort(monthLogs,monthLogs.length, false);
+        
+        //-----------------selection---------------
+        //logsArray=sort.selectionSort(logsArray, true);
         //int necessaryIndex = 1;
         //int firstIndex=0,lastIndex=-1;
         //boolean verify=false;
         //for(Log log : logsArray){
-            //lastIndex++;
-            //if(lastIndex==1000000){
-                //verify=true;
-            //}
-            //if(log.getMonth().getValue()!=necessaryIndex){
-                //if(verify==true){
-                    //lastIndex--;
-                    //break;
-                //}
-                //firstIndex=lastIndex;
-                //necessaryIndex++;
-            //}
+        //    lastIndex++;
+        //    if(lastIndex==1000000){
+        //        verify=true;
+        //    }
+        //    if(log.getMonth().getValue()!=necessaryIndex){
+        //        if(verify==true){
+        //            verify=false;
+        //            lastIndex--;
+        //            break;
+        //        }
+        //        firstIndex=lastIndex;
+        //        necessaryIndex++;
+        //    }
         //}
-        //necessaryIndex = 1000000-firstIndex;
+        //if(verify==false){
+        //    lastIndex=logsArray.length;
+        //}
+        //necessaryIndex = 1000000-(firstIndex);
         //Log[] monthLogs = Arrays.copyOfRange(logsArray, firstIndex, lastIndex);
-        //monthLogs = sort.countingSort(monthLogs, monthLogs.length, false);
-        //logsArray=sort.radixSort(logsArray, true);
-        //int j=logsArray.length-1;
-        //int indexMonth=logsArray[j].getMonth().getValue();
-        
-        //while(logsArray[j].getMonth().getValue()==indexMonth){
-        //    j--;
-        //}
-        //j++;
-        //Log[] monthLogs = Arrays.copyOfRange(logsArray, j, logsArray.length-1);
-        //int necessaryIndex = 1000000-j;   
-        //monthLogs = sort.radixSort(monthLogs, false);
-        logsArray=sort.selectionSort(logsArray, true);
-        int j=logsArray.length-1;
-        int indexMonth=logsArray[j].getMonth().getValue();
-        
-        while(logsArray[j].getMonth().getValue()==indexMonth){
-            j--;
-        }
-        j++;
-        Log[] monthLogs = Arrays.copyOfRange(logsArray, j, logsArray.length-1);
-        int necessaryIndex = 1000000-j;   
-        monthLogs = sort.selectionSort(monthLogs, false);
+        //monthLogs = sort.selectionSort(monthLogs, false);
         System.out.println("The Impostor is "+ monthLogs[necessaryIndex].getUser()+" in "+monthLogs[necessaryIndex].getMonth()+" log: "+monthLogs[necessaryIndex].getLog());
 
     }
